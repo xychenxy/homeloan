@@ -60,8 +60,6 @@ function calculateLoanWithOffset() {
   const interestSaved = noOffsetTotalInterest - totalInterest;
   const interestSavedPercent = (interestSaved / noOffsetTotalInterest) * 100;
 
-  console.log('noOffsetTotalInterest',noOffsetTotalInterest);
-  
 
   const payoffDate = new Date(startDate.getFullYear(), startDate.getMonth() + month + 1);
 
