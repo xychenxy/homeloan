@@ -29,16 +29,17 @@ function calculateLoanWithOffset() {
   const startDate = new Date();
 
   while (loanBalance > 0 && month < 1000) {
-    const effectiveBalance = Math.max(loanBalance - offsetBalance, 0);
-    const interest = effectiveBalance * monthlyRate;
-    const principal = monthlyPayment - interest;
+    offsetBalance += monthlyOffset;
+    const effectiveBalance = Math.max(loanBalance - offsetBalance, 0);// 用来计算 应付利息
+    const interest = effectiveBalance * monthlyRate; //利息
+    const principal = monthlyPayment - interest; // 本金
 
     loanBalance += interest; // 利息加入贷款余额
-    loanBalance -= principal;
+    loanBalance -= monthlyPayment;
     if (loanBalance < 0) loanBalance = 0;
 
     totalInterest += interest;
-    offsetBalance += monthlyOffset;
+    
     offsetBalance -= monthlyPayment;
     if (offsetBalance < 0) offsetBalance = 0;
 
@@ -49,15 +50,18 @@ function calculateLoanWithOffset() {
     chartDataLoanBalance.push(parseFloat(loanBalance.toFixed(2)));
     chartDataOffsetBalance.push(parseFloat(offsetBalance.toFixed(2)));
     chartDataEffectiveBalance.push(parseFloat(effectiveBalance.toFixed(2)));
-
+    
     if (offsetBalance >= loanBalance) break;
     month++;
   }
 
   // 无 Offset 情况下利息
-  const noOffsetTotalInterest = monthlyPayment * month - loanAmount;
+  const noOffsetTotalInterest = monthlyPayment * loanTermMonths - loanAmount;
   const interestSaved = noOffsetTotalInterest - totalInterest;
   const interestSavedPercent = (interestSaved / noOffsetTotalInterest) * 100;
+
+  console.log('noOffsetTotalInterest',noOffsetTotalInterest);
+  
 
   const payoffDate = new Date(startDate.getFullYear(), startDate.getMonth() + month + 1);
 
