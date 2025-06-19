@@ -43,9 +43,19 @@
 
   <div id="results" class="mb-4"></div>
 
-  <canvas id="loanChart" height="100"></canvas>
-  <hr />
-  <canvas id="effectiveBalanceChart" height="120"></canvas>
+  <div class="mb-5">
+    <h5>📊 每月利息变化</h5>
+    <div style="width: 100%; max-height: 300px; overflow-x: auto;">
+      <canvas id="loanChart"></canvas>
+    </div>
+  </div>
+
+  <div class="mb-5">
+    <h5>📉 贷款 / Offset / 实际计息金额</h5>
+    <div style="width: 100%; max-height: 300px; overflow-x: auto;">
+      <canvas id="effectiveBalanceChart"></canvas>
+    </div>
+  </div>
 
   <script src="homeloan.js"></script>
 </body>
